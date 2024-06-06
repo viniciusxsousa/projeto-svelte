@@ -8,14 +8,18 @@
 
 	let user = ''
 
-	function aoSubmeter() {
-		dateGit = {
-		avatar_url: 'https://github.com/viniciusxsousa.png',
-		login: 'viniciusxsousa',
-		nome: 'Vinicius Sousa',
-		perfil_url: 'https://github.com/viniciusxsousa',
-		repositorios_publicos: 30,
-		seguidores: 20
+	async function aoSubmeter() {
+	 const resp = await	fetch(`https://api.github.com/users/${user}`);
+	 const {avatar_url, followers, login, name, public_repos, html_url} = await resp.json();
+
+	 /* console.log(dadosUsuario); */
+ 		dateGit = {
+		avatar_url,
+		login,
+		nome: name,
+		perfil_url: html_url,
+		repositorios_publicos: public_repos,
+		seguidores: followers
 	}
 	}
 </script>
