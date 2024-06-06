@@ -1,6 +1,17 @@
 <script lang="ts">
 	import Titulo from "./components/Titulo.svelte";
 	import BarraSuperior from "./components/BarraSuperior.svelte";
+	
+    import type IUsuario from "./interfaces/IUsuario";
+
+	let dateGit: IUsuario = {
+		avatar_url: 'https://github.com/viniciusxsousa.png',
+		login: 'viniciusxsousa',
+		nome: 'Vinicius Sousa',
+		perfil_url: 'https://github.com/viniciusxsousa',
+		repositorios_publicos: 30,
+		seguidores: 20
+	}
 
 	let user = ''
 
@@ -29,16 +40,20 @@
 
 		<div class="usuario">
 			<div class="foto-container">
-				<a href="https://github.com/viniciusxsousa" target='_blank'>
-					<div class="foto-usuario"></div>
+				<a href={dateGit.perfil_url} target='_blank'>
+					<div
+						class="foto-usuario" 
+						style:background-image="url({dateGit.avatar_url})"
+					>
+					</div>
 				</a>
 			</div>
 
 			<div class="detalhes-usuario">
-				<div class="info">Nome: <span>Vinicius Sousa</span></div>
-				<div class="info">Usuário: <span>viniciusxsousa</span></div>
-				<div class="info">Seguidores: <span>20</span></div>
-				<div class="info">Repositorios<span>30</span></div>
+				<div class="info">Nome: <span>{dateGit.nome}</span></div>
+				<div class="info">Usuário: <span>{dateGit.login}</span></div>
+				<div class="info">Seguidores: <span>{dateGit.seguidores}</span></div>
+				<div class="info">Repositorios<span>{dateGit.repositorios_publicos}</span></div>
 			</div>
 		</div>
 	</div>
@@ -133,7 +148,6 @@
     border: 4.56px solid #2e80fa;
     border-radius: 50%;
     background-size: cover;
-	background-image: url('http://github.com/viniciusxsousa.png');
   }
 
   .detalhes-usuario {
