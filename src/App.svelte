@@ -4,7 +4,12 @@
 	
     import type IUsuario from "./interfaces/IUsuario";
 
-	let dateGit: IUsuario = {
+	let dateGit: IUsuario = null
+
+	let user = ''
+
+	function aoSubmeter() {
+		dateGit = {
 		avatar_url: 'https://github.com/viniciusxsousa.png',
 		login: 'viniciusxsousa',
 		nome: 'Vinicius Sousa',
@@ -12,11 +17,6 @@
 		repositorios_publicos: 30,
 		seguidores: 20
 	}
-
-	let user = ''
-
-	function aoSubmeter() {
-		console.log(user);
 	}
 </script>
 
@@ -34,7 +34,7 @@
 			</form>
 		</div>
 	</header>
-
+	{#if dateGit}
 	<div class="card-usuario">
 		<BarraSuperior/>
 
@@ -57,6 +57,7 @@
 			</div>
 		</div>
 	</div>
+	{/if}
 </div>
 
 <style>
