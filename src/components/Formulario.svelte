@@ -1,6 +1,5 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type IUsuario from "../interfaces/IUsuario";
 
     let user = ''
 
@@ -9,16 +8,16 @@
     async function aoSubmeter() {
 	 const resp = await	fetch(`https://api.github.com/users/${user}`);
 	 const {avatar_url, followers, login, name, public_repos, html_url} = await resp.json();
-
+     
      dispatch('aoAlterarUsuario', {
-            avatar_url,
-            login,
-            nome: name,
-            perfil_url: html_url,
-            repositorios_publicos: public_repos,
-            seguidores: followers
+         avatar_url,
+         login,
+         nome: name,
+         perfil_url: html_url,
+         repositorios_publicos: public_repos,
+         seguidores: followers
 	    })
-
+        
     }
 </script>
 

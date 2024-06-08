@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Titulo from "./components/Titulo.svelte";
 	
   import type IUsuario from "./interfaces/IUsuario";
   import CardUsuario from "./components/CardUsuario.svelte";
-  import Formulario from "./components/Formulario.svelte";
+  import Header from "./components/Header.svelte";
 
 	let dateGit: IUsuario = null
 
@@ -14,13 +13,7 @@
 </script>
 
 <div class="app">
-	<header>
-		<Titulo/>
-
-		<div class="busca-usuario">
-			<Formulario on:aoAlterarUsuario={definirUsuario} />
-		</div>
-	</header>
+	<Header on:aoAlterarUsuario={definirUsuario}/>
 
 	{#if dateGit}
 		<CardUsuario {dateGit} />
@@ -32,16 +25,4 @@
 	.app {
 		max-height: 100vh;
 	}
-
-	header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.busca-usuario {
-    position: relative;
-    width: 70%;
-  }
-
 </style>
