@@ -1,5 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  
+  import { obterUsuario, obterRepositorios } from "../utils/api";
 
   let user = "";
   let statusErro: null | number = null;
@@ -7,13 +9,16 @@
   const dispatch = createEventDispatcher();
 
   async function aoSubmeter() {
-    const resp = await fetch(`https://api.github.com/users/${user}`);
+    const resp = await obterUsuario(user);
+    const projetos = await obterRepositorios(user);
 
-    if (resp.ok) {
-      const { avatar_url, followers, login, name, public_repos, html_url } =
-        await resp.json();
+    if (resp.ok && projetos.ok) {
+      const { avatar_url, followers, login, name, public_repos, html_url } = await resp.json();
+      const repositorios = await projetos.json();
 
       statusErro = null
+
+      console.log(repositorios);
 
       dispatch("aoAlterarUsuario", {
         avatar_url,
