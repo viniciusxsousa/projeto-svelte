@@ -1,22 +1,24 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
     import type IUsuario from "../interfaces/IUsuario";
 
     let user = ''
 
-    export let dateGit: IUsuario | null
+    const dispatch = createEventDispatcher();
 
     async function aoSubmeter() {
 	 const resp = await	fetch(`https://api.github.com/users/${user}`);
 	 const {avatar_url, followers, login, name, public_repos, html_url} = await resp.json();
 
- 		dateGit = {
+     dispatch('aoAlterarUsuario', {
             avatar_url,
             login,
             nome: name,
             perfil_url: html_url,
             repositorios_publicos: public_repos,
             seguidores: followers
-	    }
+	    })
+
     }
 </script>
 

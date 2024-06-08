@@ -1,11 +1,15 @@
 <script lang="ts">
 	import Titulo from "./components/Titulo.svelte";
 	
-    import type IUsuario from "./interfaces/IUsuario";
-    import CardUsuario from "./components/CardUsuario.svelte";
-    import Formulario from "./components/Formulario.svelte";
+  import type IUsuario from "./interfaces/IUsuario";
+  import CardUsuario from "./components/CardUsuario.svelte";
+  import Formulario from "./components/Formulario.svelte";
 
 	let dateGit: IUsuario = null
+
+  function definirUsuario(evento: CustomEvent) {
+    dateGit = evento.detail;
+  }
 
 </script>
 
@@ -14,7 +18,7 @@
 		<Titulo/>
 
 		<div class="busca-usuario">
-			<Formulario bind:dateGit />
+			<Formulario on:aoAlterarUsuario={definirUsuario} />
 		</div>
 	</header>
 
