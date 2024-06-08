@@ -1,37 +1,56 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
 
-    let user = ''
+  let user = "";
+  let statusErro: null | number = null;
 
-    const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
-    async function aoSubmeter() {
-	 const resp = await	fetch(`https://api.github.com/users/${user}`);
-	 const {avatar_url, followers, login, name, public_repos, html_url} = await resp.json();
-     
-     dispatch('aoAlterarUsuario', {
-         avatar_url,
-         login,
-         nome: name,
-         perfil_url: html_url,
-         repositorios_publicos: public_repos,
-         seguidores: followers
-	    })
-        
+  async function aoSubmeter() {
+    const resp = await fetch(`https://api.github.com/users/${user}`);
+
+    if (resp.ok) {
+      const { avatar_url, followers, login, name, public_repos, html_url } =
+        await resp.json();
+
+      statusErro = null
+
+      dispatch("aoAlterarUsuario", {
+        avatar_url,
+        login,
+        nome: name,
+        perfil_url: html_url,
+        repositorios_publicos: public_repos,
+        seguidores: followers,
+      });
+    } else {
+      statusErro = resp.status;
+
+      dispatch('aoAlterarUsuario', null);
     }
+  }
 </script>
 
-
 <form on:submit|preventDefault={aoSubmeter}>
-    <input type="text" class="input" placeholder="Digite o usuário" bind:value={user}>
+  <input
+    type="text"
+    class="input"
+    class:input-erro={statusErro === 404}
+    placeholder="Digite o usuário"
+    bind:value={user}
+  />
 
-    <div class="botao-container">
-        <button type="submit" class="botao" >Buscar</button>
-    </div>
+  {#if statusErro === 404}
+    <span class="erro">Usuário não encontrado</span>
+  {/if}
+
+  <div class="botao-container">
+    <button type="submit" class="botao">Buscar</button>
+  </div>
 </form>
 
 <style>
-      .input {
+  .input {
     padding: 15px 25px;
     width: calc(100% - 8.75rem);
     font-size: 1rem;
@@ -48,6 +67,22 @@
     font-size: 19.5px;
     line-height: 26px;
     color: #6e8cba;
+  }
+
+  .erro {
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    z-index: -1;
+    color: #ff003e;
+  }
+
+  .input-erro {
+    border: 1px solid #ff003e;
   }
 
   .botao-container {
