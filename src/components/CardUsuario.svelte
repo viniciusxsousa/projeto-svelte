@@ -21,7 +21,9 @@
         </div>
 
         <div class="detalhes-usuario">
-            <div class="info">Nome: <span>{dateGit.nome}</span></div>
+            {#if dateGit.nome}
+              <div class="info">Nome: <span>{dateGit.nome}</span></div>
+            {/if}
             <div class="info">Usuário: <span>{dateGit.login}</span></div>
             <div class="info">Seguidores: <span>{dateGit.seguidores}</span></div>
             <div class="info">Repositorios<span>{dateGit.repositorios_publicos}</span></div>
