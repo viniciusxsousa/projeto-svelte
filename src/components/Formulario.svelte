@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   
   import { obterUsuario, obterRepositorios } from "../utils/api";
+  import montarUsuario from "../utils/montarUsuario";
 
   let user = "";
   let statusErro: null | number = null;
@@ -13,21 +14,12 @@
     const projetos = await obterRepositorios(user);
 
     if (resp.ok && projetos.ok) {
-      const { avatar_url, followers, login, name, public_repos, html_url } = await resp.json();
+      const dadosUsuario = await resp.json();
       const repositorios = await projetos.json();
 
       statusErro = null
 
-      console.log(repositorios);
-
-      dispatch("aoAlterarUsuario", {
-        avatar_url,
-        login,
-        nome: name,
-        perfil_url: html_url,
-        repositorios_publicos: public_repos,
-        seguidores: followers,
-      });
+      dispatch("aoAlterarUsuario", montarUsuario(dadosUsuario, repositorios));
     } else {
       statusErro = resp.status;
 
