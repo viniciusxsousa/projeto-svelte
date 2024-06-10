@@ -1,38 +1,57 @@
 <script lang="ts">
-    import type IUsuario from '../interfaces/IUsuario';
+  import type IUsuario from "../interfaces/IUsuario";
 
-    import BarraSuperior from './BarraSuperior.svelte';
+  import BarraSuperior from "./BarraSuperior.svelte";
 
-    export let dateGit: IUsuario;
+  export let dateGit: IUsuario;
 </script>
 
 <div class="card-usuario">
-    <BarraSuperior/>
+  <BarraSuperior />
 
-    <div class="usuario">
-        <div class="foto-container">
-            <a href={dateGit.perfil_url} target='_blank'>
-                <div
-                    class="foto-usuario" 
-                    style:background-image="url({dateGit.avatar_url})"
-                >
-                </div>
-            </a>
-        </div>
-
-        <div class="detalhes-usuario">
-            {#if dateGit.nome}
-              <div class="info">Nome: <span>{dateGit.nome}</span></div>
-            {/if}
-            <div class="info">Usuário: <span>{dateGit.login}</span></div>
-            <div class="info">Seguidores: <span>{dateGit.seguidores}</span></div>
-            <div class="info">Repositorios<span>{dateGit.repositorios_publicos}</span></div>
-        </div>
+  <div class="usuario">
+    <div class="foto-container">
+      <a href={dateGit.perfil_url} target="_blank">
+        <div
+          class="foto-usuario"
+          style:background-image="url({dateGit.avatar_url})"
+        ></div>
+      </a>
     </div>
+
+    <div class="detalhes-usuario">
+      {#if dateGit.nome}
+        <div class="info">Nome: <span>{dateGit.nome}</span></div>
+      {/if}
+      <div class="info">Usuário: <span>{dateGit.login}</span></div>
+      <div class="info">Seguidores: <span>{dateGit.seguidores}</span></div>
+      <div class="info">
+        Repositorios<span>{dateGit.repositorios_publicos}</span>
+      </div>
+    </div>
+
+    <div class="repositorios">
+      <h2 class="titulo">Repositorios recentes:</h2>
+
+      <ul>
+        {#each dateGit.repositorios_recentes as repositorio}
+          <li>
+            <a
+              href={repositorio.url}
+              target="_blank"
+              class="repositorio"
+            >
+              {repositorio.nome}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </div>
 </div>
 
 <style>
-    .card-usuario {
+  .card-usuario {
     margin-top: 65px;
   }
 
@@ -74,4 +93,16 @@
     font-weight: normal;
   }
 
+  .repositorios > .titulo {
+    font-size: 20px;
+    line-height: 31px;
+    font-weight: 600;
+    color: #395278;
+  }
+  .repositorio {
+    font-size: 20px;
+    line-height: 31px;
+    color: #6781a8;
+    transition: color 0.2s;
+  }
 </style>
